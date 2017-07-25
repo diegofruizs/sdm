@@ -20,4 +20,16 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.index("Bienvenido a SDM - Bogotá TransmiMetro"))
   }
 
+  def passengers = Action{
+    Ok(views.html.index("Passengers"))
+  }
+
+  def location = Action{
+    Ok(views.html.index("Location"))
+  }
+
+  def metro = Action{
+    Ok(views.html.index("Each Metro"))
+  }
+
 }

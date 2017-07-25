@@ -4,7 +4,7 @@
 
 <section id="top">
   <div class="wrapper">
-    <h1><a href="https://playframework.com/documentation/@version/Home">@message</a></h1>
+    <h1><a href="@routes.HomeController.index()">@message</a></h1>
   </div>
 </section>
 
@@ -17,26 +17,19 @@
    SDM Bogotá
   </p>
 
-  <blockquote>
-    <p>
-      You’re using Play @version
-    </p>
-  </blockquote>
-
 </article>
-
 <aside>
   <h3>Passengers</h3>
   <ul>
-    <li><a href="#">The amount of passenger at every station</a></li>
+    <li><a href="@routes.HomeController.passengers()">The amount of passenger at every station</a></li>
   </ul>
   <h3>Location</h3>
   <ul>
-    <li><a href="#">Metro-car location</a></li>
+    <li><a href="@routes.HomeController.location()">Metro-car location</a></li>
   </ul>
   <h3>Each Metro</h3>
   <ul>
-    <li><a href="#">The number of passengers in each metro-car</a></li>
+    <li><a href="@routes.HomeController.metro()">The number of passengers in each metro-car</a></li>
   </ul>
   
 </aside>
