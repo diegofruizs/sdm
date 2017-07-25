@@ -1,2 +1,16 @@
 *.class
 *.log
+logs
+target
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
+sbt-dist/bin/sbt
+sbt-dist/bin/sbt-launch.jar
+sbt-dist/bin/sbt-launch-lib.bash
+sbt-dist/bin/sbt.bat
+sbt-dist/conf/sbtconfig.txt
+sbt-dist/conf/sbtopts
