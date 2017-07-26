@@ -1,4 +1,5 @@
 package main
+import java.util.ArrayList
 
 import models.{MetroCar, Passenger, Station}
 
@@ -7,7 +8,7 @@ object Inicio {
     println("Iniciando creación de objetos de SDM")
 
     // DEfinimos un lista de pasajeros e inicializamos en cero
-    var listPassengers = Set[Passenger]()
+    val listPassengers: ArrayList[Passenger] = new ArrayList[Passenger]()
 
     // Creamos dos objetos de tipo estación
     val portalAmericas = new Station(1, "Portal americas", listPassengers, true)
@@ -21,24 +22,22 @@ object Inicio {
     var passenger1 = new Passenger(100, "7:00:00 a. m.", portalAmericas, null, calle1, metro1)
     var passenger2 = new Passenger(101, "7:00:00 a. m.", portalAmericas, null, calle1, metro1)
 
-    passenger1.foo
+    listPassengers.add(passenger1)
+    listPassengers.add(passenger2)
 
-    listPassengers += passenger1
-    listPassengers += passenger2
+    portalAmericas.amountPassengers=listPassengers
+    calle1.amountPassengers=passenger1.getPassengers()
 
-    portalAmericas.amountPassengers = listPassengers
-
+    println("Pasajeros en Calle1: "+calle1.amountPassengers.size)
     println("Pasajeros en Portal: "+portalAmericas.amountPassengers.size)
-
     println(listPassengers.size)
 
     if (listPassengers.size > 0) {
-      for (a <- listPassengers) {
-        println(a.id)
-        println(a.entranceTime)
-        println(a.entranceStation.name)
-        println(a.entranceTime)
-        println(a.metroCar.id)
+      for(a <- 0 to listPassengers.size()-1){
+        println(listPassengers.get(a).destination.name)
+        println(listPassengers.get(a).entranceStation.name)
+        println(listPassengers.get(a).entranceTime)
+        println(listPassengers.get(a).metroCar.id)
         println("****************")
       }
     }
