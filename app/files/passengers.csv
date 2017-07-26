@@ -1,0 +1,48 @@
+Passenger Id;Entrance;Entrance time;Departure time;Destination
+1;Portal americas;7:00:00 a. m.;;Calle 72
+2;Portal americas;7:04:00 a. m.;;Calle 63
+3;Portal americas;7:08:00 a. m.;;Calle 45
+4;Portal americas;7:12:00 a. m.;;Calle 26
+5;Portal americas;7:16:00 a. m.;;Calle 10
+6;Portal americas;7:00:00 a. m.;;Calle 1
+7;NSQ;7:04:00 a. m.;;Narino
+8;NQS;7:08:00 a. m.;;NSQ 1
+9;Narino;7:12:00 a. m.;;Carrera 50 1
+10;Narino;7:16:00 a. m.;;Carrera 68 1
+11;Kennedy;7:20:00 a. m.;;Avenida boyaca
+12;Narino;7:24:00 a. m.;;Kennedy
+13;Carrera 68;7:28:00 a. m.;;Carrera 80
+14;Carrera 80;7:32:00 a. m.;;Calle 42 sur
+15;Carrera 68;7:00:00 a. m.;;Portal americas
+16;Carrera 68;7:04:00 a. m.;;Calle 42 sur
+17;Carrera 50;7:08:00 a. m.;;Carrera 80
+18;Carrera 50;7:12:00 a. m.;;Kennedy
+19;Calle 72;7:16:00 a. m.;;Avenida boyaca
+20;Calle 72;7:20:00 a. m.;;Carrera 68
+21;Calle 72;7:24:00 a. m.;;Carrera 50
+22;Calle 72;7:28:00 a. m.;;NQS
+23;Calle 72;7:30:00 a. m.;;Narino
+24;Calle 72;7:00:00 a. m.;;Calle 1
+25;Calle 63;7:04:00 a. m.;;Calle 10
+26;Calle 63;7:08:00 a. m.;;Calle 26
+27;Calle 1;7:12:00 a. m.;;Calle 45
+28;Calle 45;7:16:00 a. m.;;Calle 63
+29;Calle 42 sur;7:10:00 a. m.;;Calle 72
+30;Calle 42 sur;7:10:00 a. m.;;Calle 1
+31;Calle 26;7:10:00 a. m.;;Portal americas
+32;Calle 26;7:10:00 a. m.;;Calle 1
+33;Calle 10;7:20:00 a. m.;;Calle 72
+34;Calle 10;7:20:00 a. m.;;Calle 1
+35;Calle 1;7:20:00 a. m.;;Portal americas
+36;Calle 26;7:20:00 a. m.;;Calle 1
+37;Calle 1;7:30:00 a. m.;;Calle 72
+38;Calle 10;7:30:00 a. m.;;Calle 1
+39;Calle 1;7:30:00 a. m.;;Portal americas
+40;Avenida boyaca;7:30:00 a. m.;;Calle 1
+41;Calle 1;7:40:00 a. m.;;Calle 72
+42;Avenida boyaca;7:40:00 a. m.;;Calle 1
+43;Calle 1;7:40:00 a. m.;;Portal americas
+44;Avenida boyaca;7:40:00 a. m.;;Calle 1
+45;Calle 1;7:50:00 a. m.;;Calle 72
+46;Avenida boyaca;7:50:00 a. m.;;Calle 1
+47;Avenida boyaca;7:50:00 a. m.;;Portal americas
