@@ -2,6 +2,8 @@ import scala.collection.mutable._
 import scala.reflect.io.File
 
 object test {
+
+
   val path = "C:\\Users\\comer\\Desktop\\proyectos\\Github\\sdm\\app\\files"
   val filesHere = (new java.io.File(path)).listFiles
   var size = filesHere.length
@@ -12,10 +14,9 @@ object test {
       .toList
     for (line <- listaLineas) {
       val cols = line.split(";")
-      println(s"${cols(1)}")
-
+      //println(s"${cols(1)}")
+      println(cols(1)+" "+cols(2)+" "+cols(3))
     }
-
   }
 
  if(filesHere.nonEmpty){
