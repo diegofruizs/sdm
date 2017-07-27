@@ -23,7 +23,9 @@
                             <tr>
                                 <td>@metros.get(a).id</td>
                                 <td>@metros.get(a).capacity</td>
-                                <td><b>@metros.get(a).passengers.size()</b></td>
+                                @if(metros.get(a).passengers != null) {
+                                    <td><b>@metros.get(a).passengers.size()</b></td>
+                                } 
                             </tr>
                         </table>
                         <br>

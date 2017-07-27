@@ -3,6 +3,7 @@ package controllers
 import java.util
 import java.util.ArrayList
 import javax.inject._
+import main.Inicio
 
 import models.{MetroCar, Passenger, Station}
 import play.api.mvc._
@@ -38,7 +39,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def metro = Action {
     var cars: ArrayList[MetroCar] = new ArrayList[MetroCar]()
-    cars = new MetroCar().getMetroCars()
+    //cars = new MetroCar().getMetroCars()
+    cars = Inicio.constuirMetroCars()
     Ok(views.html.index("Each Metro", "The number of passengers in each metro-car", null, 3, null, cars))
   }
 
