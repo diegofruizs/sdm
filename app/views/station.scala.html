@@ -1,0 +1,57 @@
+@import java.util
+@(message: String, titlePage: String, style: String = "scala", stations: util.ArrayList[Station])
+
+@defining(play.core.PlayVersion.current) { version =>
+    <section id="top">
+        <div class="wrapper">
+            <h1><a href="@routes.HomeController.index()">@message</a></h1>
+        </div>
+    </section>
+    <div id="content" class="wrapper doc">
+        <article>
+            <h1>@titlePage</h1>
+            <p>
+            @if(stations != null) {
+                @for(a <- 0 to stations.size() - 1) {
+                    <div class="arrow">
+                        <div class="color-rect-border">
+                            <h2>@stations.get(a).name</h2>
+                            <br>
+                            <table>
+                                <tr>
+                                    <th>Estación Principal</th>
+                                    <th>Cantidad de pasajeros en la estación</th>
+
+                                </tr>
+                                <tr>
+                                    <td>@stations.get(a).stationHub</td>
+                                    <td>@stations.get(a).amountPassengers.size()</td>
+
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                }
+            }
+
+            </p>
+        </article>
+        <aside>
+            <h3>Passengers</h3>
+            <ul>
+                <li><a href="@routes.HomeController.passengers()">The amount of passenger at every station</a></li>
+            </ul>
+            <h3>Location</h3>
+            <ul>
+                <li><a href="@routes.HomeController.location()">Metro-car location</a></li>
+            </ul>
+            <h3>Each Metro</h3>
+            <ul>
+                <li><a href="@routes.HomeController.metro()">The number of passengers in each metro-car</a></li>
+            </ul>
+
+        </aside>
+
+    </div>
+}

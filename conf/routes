@@ -5,7 +5,7 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 
-GET     /passengers                 controllers.HomeController.passengers
+GET     /passengers                 controllers.HomeController.passengers()
 GET     /location                   controllers.HomeController.location
 GET     /metro                      controllers.HomeController.metro
 # An example controller showing how to use dependency injection

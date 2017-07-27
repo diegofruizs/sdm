@@ -1,0 +1,56 @@
+@(message: String, titlePage: String, style: String = "scala")
+
+@defining(play.core.PlayVersion.current) { version =>
+    <section id="top">
+        <div class="wrapper">
+            <h1><a href="@routes.HomeController.index()">@message</a></h1>
+        </div>
+    </section>
+    <div id="content" class="wrapper doc">
+        <article>
+            <h1>@titlePage</h1>
+            <p>
+                Bienvenido a TransmiMetro
+            </p>
+            <ul>
+                <li>Los trayectos son:
+                    <ul>
+                        <li>
+                            Trayecto 1 (Portal américas - Calle 1) deben realizar 31 viajes en un día.
+                        </li>
+                        <li>
+                            Trayecto 2 (Call2 72 - Calle 1) deben realizar 43 viajes en un día.
+                        </li>
+                        <li>
+                            Trayecto 3 deben realizar 20 viajes en un día.
+                        </li>
+                        <li>
+                            Con la suma de los 3 trayectos se habilitan 997 200 cupos.
+                        </li>
+                    </ul>
+                </li>
+                <li>De cada terminal (3) sale un carro a las 4am.</li>
+                <li>Los carros salen de las terminales a partir de ese momentos con una frecuencia de 5 min.</li>
+                <li>En horarios picos los carros tardan 3 min en trasladarse de una estación a otra y en horario normal 4 min.</li>
+                <li>En horarios picos los carros realizan una parada en la estación de destino de 4.5 min antes de devolverse y en horario normal la parada es de 10 min.</li>
+            </ul>
+
+        </article>
+        <aside>
+            <h3>Passengers</h3>
+            <ul>
+                <li><a href="@routes.HomeController.passengers()">The amount of passenger at every station</a></li>
+            </ul>
+            <h3>Location</h3>
+            <ul>
+                <li><a href="@routes.HomeController.location()">Metro-car location</a></li>
+            </ul>
+            <h3>Each Metro</h3>
+            <ul>
+                <li><a href="@routes.HomeController.metro()">The number of passengers in each metro-car</a></li>
+            </ul>
+
+        </aside>
+
+    </div>
+}
