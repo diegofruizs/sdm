@@ -17,15 +17,18 @@
                         <table>
                             <tr>
                                 <th>Id del Metro</th>
+                                <th>Hora de salida</th>
                                 <th>Estación actual</th>
                                 <th>Destino</th>
                             </tr>
-                            <tr>
-                                <td>@metros.get(a).id</td>
-                                <td>@metros.get(a).schedules.get(0).departureStation.name</td>
-                                <td>@metros.get(a).schedules.get(0).destination.name</td>
-
-                            </tr>
+                            @for(b <- 0 to metros.get(a).schedules.size() - 1) {
+                                <tr>
+                                    <td>@metros.get(a).id</td>
+                                    <td>@metros.get(a).schedules.get(b).departureTime</td>
+                                    <td>@metros.get(a).schedules.get(b).departureStation.name</td>
+                                    <td>@metros.get(a).schedules.get(b).destination.name</td>
+                                </tr>
+                            }
                         </table>
                         <br>
                     </div>

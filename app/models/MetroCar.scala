@@ -6,8 +6,8 @@ class MetroCar(
                 var id: Int = 0,
                 var capacity: Int = 0,
                 var station: Station = null,
-                var passengers: ArrayList[Passenger] = null,
-                var schedules: ArrayList[Schedule] = null
+                var passengers: ArrayList[Passenger] = new ArrayList[Passenger](),
+                var schedules: ArrayList[Schedule] =  new ArrayList[Schedule]()
               ) {
 
   def getMetroCars(): ArrayList[MetroCar] = {

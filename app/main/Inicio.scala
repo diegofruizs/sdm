@@ -1,7 +1,8 @@
 package main
 
+import java.text.{DateFormat, SimpleDateFormat}
 import java.util
-import java.util.ArrayList
+import java.util.{ArrayList, Calendar, Date}
 
 import models.{MetroCar, Passenger, Schedule, Station}
 
@@ -9,38 +10,55 @@ object Inicio {
 
   def main(args: Array[String]) {
     println("Iniciando creación de objetos de SDM")
-    var estaciones: util.ArrayList[Station] = constuirEstaciones
-    var cars: util.ArrayList[MetroCar] = constuirMetroCars
-    println("Estaciones: "+estaciones.size())
-    println("Cars: "+cars.size)
+    val today = Calendar.getInstance().getTime()
+    var str1 = "01:35:10"
+    var str2 = "02:50:10"
+    var parser1 = parserStringToTime(str1)
+    var parser2 = parserStringToTime(str2)
+
+    println(parser1)
+    println(parser2)
+
+    println(System.getenv().get("sdm"))
+
+    if (parser1.before(today) && parser2.after(today)) {
+      println("rango")
+    }
   }
 
-  def constuirMetroCars(): util.ArrayList[MetroCar]= {
+  def parserStringToTime(time: String): java.util.Date = {
+    val formatter = new SimpleDateFormat("hh:mm:ss")
+    val date = formatter.parse(time)
+    date
+  }
+
+
+  def constuirMetroCars(): util.ArrayList[MetroCar] = {
 
     // Creación de los Metro cars
-    var car1 = new MetroCar(1, 900, null, null, null)
-    var car2 = new MetroCar(2, 900, null, null, null)
-    var car3 = new MetroCar(3, 900, null, null, null)
-    var car4 = new MetroCar(4, 900, null, null, null)
-    var car5 = new MetroCar(5, 900, null, null, null)
-    var car6 = new MetroCar(6, 900, null, null, null)
-    var car7 = new MetroCar(7, 900, null, null, null)
-    var car8 = new MetroCar(8, 900, null, null, null)
-    var car9 = new MetroCar(9, 900, null, null, null)
-    var car10 = new MetroCar(10, 900, null, null, null)
-    var car11 = new MetroCar(11, 900, null, null, null)
-    var car12 = new MetroCar(12, 900, null, null, null)
-    var car13 = new MetroCar(13, 1800, null, null, null)
-    var car14 = new MetroCar(14, 1800, null, null, null)
-    var car15 = new MetroCar(15, 1800, null, null, null)
-    var car16 = new MetroCar(16, 1800, null, null, null)
-    var car17 = new MetroCar(17, 1800, null, null, null)
-    var car18 = new MetroCar(18, 1800, null, null, null)
-    var car19 = new MetroCar(19, 1800, null, null, null)
-    var car20 = new MetroCar(20, 1800, null, null, null)
-    var car21 = new MetroCar(21, 1800, null, null, null)
-    var car22 = new MetroCar(22, 1800, null, null, null)
-    var car23 = new MetroCar(23, 1800, null, null, null)
+    var car1 = new MetroCar(1, 900, null)
+    var car2 = new MetroCar(2, 900, null)
+    var car3 = new MetroCar(3, 900, null)
+    var car4 = new MetroCar(4, 900, null)
+    var car5 = new MetroCar(5, 900, null)
+    var car6 = new MetroCar(6, 900, null)
+    var car7 = new MetroCar(7, 900, null)
+    var car8 = new MetroCar(8, 900, null)
+    var car9 = new MetroCar(9, 900, null)
+    var car10 = new MetroCar(10, 900, null)
+    var car11 = new MetroCar(11, 900, null)
+    var car12 = new MetroCar(12, 900, null)
+    var car13 = new MetroCar(13, 1800, null)
+    var car14 = new MetroCar(14, 1800, null)
+    var car15 = new MetroCar(15, 1800, null)
+    var car16 = new MetroCar(16, 1800, null)
+    var car17 = new MetroCar(17, 1800, null)
+    var car18 = new MetroCar(18, 1800, null)
+    var car19 = new MetroCar(19, 1800, null)
+    var car20 = new MetroCar(20, 1800, null)
+    var car21 = new MetroCar(21, 1800, null)
+    var car22 = new MetroCar(22, 1800, null)
+    var car23 = new MetroCar(23, 1800, null)
 
     var cars: ArrayList[MetroCar] = new util.ArrayList[MetroCar]()
     cars.add(car1)
@@ -70,7 +88,7 @@ object Inicio {
     cars
   }
 
-  def constuirEstaciones(): util.ArrayList[Station]= {
+  def constuirEstaciones(): util.ArrayList[Station] = {
     // Creación de estaciones
     var portalAmericas = new Station(1, "Portal Americas", null, true, null, null)
     var calle42sur = new Station(2, "Calle 42 sur", null, false, null, null)
@@ -106,5 +124,79 @@ object Inicio {
     estaciones.add(calle72)
 
     estaciones
+  }
+
+  def readFiles(): ArrayList[MetroCar] = {
+
+
+    val path = System.getenv().get("sdm")
+
+    val filesHere = (new java.io.File(path)).listFiles
+    var size = filesHere.length
+
+    var schedules: ArrayList[Schedule] = new util.ArrayList[Schedule]()
+
+    def readLines(x: java.io.File) {
+      println("Leyendo archivos")
+      val listaLineas = scala.io.Source.
+        fromFile(x.getPath).getLines()
+        .toList
+      for (line <- listaLineas) {
+        val cols = line.split(";")
+        if (!cols(0).equals("train_id") && !cols(1).equals("departure_station") && !cols(2).equals("departure_time") && !cols(3).equals("destination")) {
+          schedules.add(new Schedule(1, searchCarsForSchedule(cols(0).toInt), searchStationsForSchedule(cols(1).toString), cols(2), searchStationsForSchedule(cols(3).toString)))
+          //println(cols(0) + " " + cols(1) + " " + cols(2) + " " + cols(3))
+        }
+      }
+      println("Size Schedules: " + schedules.size())
+
+    }
+
+    if (filesHere.nonEmpty) {
+      for (a <- 0 to filesHere.length - 1) {
+        if (filesHere(a).getName.endsWith(".csv") && filesHere(a).getName().equals("schedules.csv")) {
+          println("Leyendo los Schedules " + filesHere(a).getName)
+          readLines(filesHere(a))
+        }
+      }
+    } else {
+      print("No hay files")
+    }
+    mergeSchedulestoCars(schedules)
+  }
+
+
+  def searchCarsForSchedule(metroId: Int): MetroCar = {
+    var cars: ArrayList[MetroCar] = constuirMetroCars()
+    var car: MetroCar = new MetroCar()
+    for (a <- 0 to cars.size() - 1) {
+      if (cars.get(a).id == metroId) {
+        car = cars.get(a)
+      }
+    }
+    car
+  }
+
+  def searchStationsForSchedule(stationName: String): Station = {
+    var stations: ArrayList[Station] = constuirEstaciones()
+    var station: Station = new Station()
+    for (a <- 0 to stations.size() - 1) {
+      if (stations.get(a).name.equals(stationName)) {
+        station = stations.get(a)
+      }
+    }
+    station
+  }
+
+  def mergeSchedulestoCars(schedules: ArrayList[Schedule]): ArrayList[MetroCar] = {
+    var cars: ArrayList[MetroCar] = constuirMetroCars()
+    for (a <- 0 until schedules.size() - 1) {
+      for (b <- 0 until cars.size() - 1) {
+        if (schedules.get(a).metroCar.id == cars.get(b).id) {
+          cars.get(b).schedules.add(schedules.get(a))
+        }
+      }
+    }
+    cars
   }
 }

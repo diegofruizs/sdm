@@ -33,7 +33,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def location = Action {
     var cars: ArrayList[MetroCar] = new ArrayList[MetroCar]()
-    cars = new MetroCar().getMetroCars()
+    cars = Inicio.readFiles()
     Ok(views.html.index("Location", "MetroCar location", null, 2, cars, null))
   }
 
