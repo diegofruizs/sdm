@@ -16,9 +16,11 @@
                     <div class="arrow">
                         <table>
                             <tr>
-                                <th>Id del Metro</th>
+                                <th>Id del Metrocar</th>
                                 <th>Capacidad</th>
-                                <th>Pasajeros en el Metro Car</th>
+                                <th>Pasajeros en el Metrocar</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
                             </tr>
                             <tr>
                                 <td>@metros.get(a).id</td>
@@ -26,6 +28,8 @@
                                 @if(metros.get(a).passengers != null) {
                                     <td><b>@metros.get(a).passengers.size()</b></td>
                                 }
+                                <td>@metros.get(a).departure_station</td>
+                                <td>@metros.get(a).destination_station</td>
                             </tr>
                         </table>
                         <br>
