@@ -7,6 +7,8 @@
             <h1><a href="@routes.HomeController.index()">@message</a></h1>
         </div>
     </section>
+
+
     <div id="content" class="wrapper doc">
         <article>
             <h1>@titlePage</h1>
@@ -41,6 +43,7 @@
             </p>
         </article>
         <aside>
+            <h3>Hora actual: <div id="txt"></div></h3>
             <h3>Passengers</h3>
             <ul>
                 <li><a href="@routes.HomeController.passengers()">The amount of passenger at every station</a></li>

@@ -29,6 +29,7 @@
                         </li>
                     </ul>
                 </li>
+                <img src="@routes.Assets.versioned("images/lines.PNG")">
                 <li>De cada terminal (3) sale un carro a las 4am.</li>
                 <li>Los carros salen de las terminales a partir de ese momentos con una frecuencia de 5 min.</li>
                 <li>En horarios picos los carros tardan 3 min en trasladarse de una estación a otra y en horario normal 4 min.</li>
@@ -37,6 +38,7 @@
 
         </article>
         <aside>
+            <h3>Hora actual: <div id="txt"></div></h3>
             <h3>Passengers</h3>
             <ul>
                 <li><a href="@routes.HomeController.passengers()">The amount of passenger at every station</a></li>
