@@ -14,23 +14,26 @@
             @if(metros != null) {
                 @for(a <- 0 to metros.size() - 1) {
                     <div class="arrow">
-                        <table>
-                            <tr>
-                                <th>Id del Metro</th>
-                                <th>Hora de salida</th>
-                                <th>Estación actual</th>
-                                <th>Destino</th>
-                            </tr>
-                            @for(b <- 0 to metros.get(a).schedules.size() - 1) {
+                        @if(metros.get(a).currentSchedule.departureTime != null) {
+                            <table>
+                                <tr>
+                                    <th>Id del Metro</th>
+                                    <th>Hora de salida</th>
+                                    <th>Estación actual</th>
+                                    <th>Destino</th>
+                                </tr>
+
                                 <tr>
                                     <td>@metros.get(a).id</td>
-                                    <td>@metros.get(a).schedules.get(b).departureTime</td>
-                                    <td>@metros.get(a).schedules.get(b).departureStation.name</td>
-                                    <td>@metros.get(a).schedules.get(b).destination.name</td>
+                                    <td>@metros.get(a).currentSchedule.departureTime</td>
+                                    <td>@metros.get(a).currentSchedule.departureStation.name</td>
+                                    <td>@metros.get(a).currentSchedule.destination.name</td>
+
                                 </tr>
-                            }
-                        </table>
-                        <br>
+
+                            </table>
+                        }
+                    <br>
                     </div>
                 }
             }
