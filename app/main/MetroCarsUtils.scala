@@ -32,7 +32,6 @@ object MetroCarsUtils {
     date
   }
 
-
   def readSchedulesFile(): ArrayList[MetroCar] = {
 
     val path = System.getenv().get("sdm")

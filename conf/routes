@@ -4,6 +4,8 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
+# GET     /socket                     controllers.Application.socket
+# GET     /                           controllers.Application.index2
 
 GET     /passengers                 controllers.HomeController.passengers()
 GET     /location                   controllers.HomeController.location

@@ -7,8 +7,10 @@ class Passenger(
                  var entranceTime: String = null,
                  var entranceStation: Station = null,
                  var departureTime: String = null,
-                 var destination: Station = null,
-                 var metroCar: MetroCar = null
+                 var destination: Station = null
                ) {
 
+    var metroCar: MetroCar = null
+
+    override def toString(): String = "Passenger: " + id + " - " + entranceTime + " (" + entranceStation + ")"
 }
