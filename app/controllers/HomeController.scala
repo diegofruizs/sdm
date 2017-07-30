@@ -19,7 +19,6 @@ import scala.concurrent.duration._
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-  private var cars: ArrayList[MetroCar] = StartUtils.getListMetroCars()
   private var stations: ArrayList[Station] = StartUtils.getListStations()
   private var schedule: Int = 0
   private var flagPass: Boolean = false
@@ -53,6 +52,9 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def metro = Action {
+    PassengerUtils.searchMetroCarToGetOn()
+    MetroCarsUtils.countPassengersInAMetroCar()
+    var cars: util.ArrayList[MetroCar] = MetroCarsUtils.getSchedules()
     Ok(views.html.index("Each Metrocar", "The number of passengers in each Metrocar", null, 3, null, cars))
   }
 

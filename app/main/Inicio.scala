@@ -1,25 +1,29 @@
 package main
 
+import java.util
 import java.util.{ArrayList, Calendar}
-import models.{MetroCar, Schedule, Station, Passenger}
 
+import models.{MetroCar, Passenger, Schedule, Station}
 import rx.lang.scala.Observable
+
 import scala.concurrent.duration._
 
 object Inicio {
 
   def main(args: Array[String]) {
-    //val inter = LoadPassengerFiles.action("Tiger", "Elephant")
-    //inter.interval(Duration(2000, MILLISECONDS))
-    //inter.subscribe(art => println("--- Article ---\n" + art.substring(0, 125)))
 
-    val o = Observable.interval(60000 millis)
-    o.subscribe(n => PassengerUtils.readPassengersFile())
+    PassengerUtils.readPassengersFile()
+    PassengerUtils.searchMetroCarToGetOn()
+    MetroCarsUtils.countPassengersInAMetroCar()
+    var cars: util.ArrayList[MetroCar] = MetroCarsUtils.getSchedules()
 
-     waitFor(o)
-  }
+    println("Size of cars " + cars.size())
 
-  def waitFor[T](obs: Observable[T]): Unit = {
-    obs.toBlocking.toIterable.last
+    for (a <- 0 to cars.size() - 1) {
+      if (cars.get(a).passengers.size() > 0) {
+        println("En carro: "+ cars.get(a).id +" Hay "+cars.get(a).passengers.size())
+      }
+    }
+
   }
 }

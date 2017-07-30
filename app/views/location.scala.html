@@ -19,16 +19,18 @@
                         @if(metros.get(a).currentSchedule != null) {
                             <table>
                                 <tr>
-                                    <th>Id del Metro</th>
-                                    <th>Hora de salida</th>
-                                    <th>Estación actual</th>
-                                    <th>Destino</th>
+                                    <th><b>Id del Metro</b></th>
+                                    <th><b>Hora de salida</b></th>
+                                    <th><b>Estación origen</b></th>
+                                    <th><b>Estación actual</b></th>
+                                    <th><b>Estación destino</b></th>
                                 </tr>
 
                                 <tr>
                                     <td>@metros.get(a).id</td>
                                     <td>@metros.get(a).currentSchedule.departureTime</td>
-                                    <td>@metros.get(a).currentSchedule.departureStation.name</td>
+                                    <td>@metros.get(a).departure_station</td>
+                                    <td><b>@metros.get(a).currentSchedule.departureStation.name</b></td>
                                     <td>@metros.get(a).currentSchedule.destination.name</td>
 
                                 </tr>

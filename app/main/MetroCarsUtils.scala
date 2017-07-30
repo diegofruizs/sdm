@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util
 import java.util.{ArrayList, Calendar, Date}
 
-import models.{MetroCar, Schedule, Station}
+import models.{MetroCar, Passenger, Schedule, Station}
 
 object MetroCarsUtils {
 
@@ -18,8 +18,8 @@ object MetroCarsUtils {
     val today = Calendar.getInstance().getTime()
     for (a <- 0 to cars.size() - 1) {
       cars.get(a).currentSchedule = null
-      var hora1=new Date()
-      var hora2=new Date()
+      var hora1 = new Date()
+      var hora2 = new Date()
       for (b <- 1 to cars.get(a).schedules.size() - 1) {
         if (cars.get(a).currentSchedule == null) {
           hora1 = parserStringToTime(cars.get(a).schedules.get(b - 1).departureTime)
@@ -56,7 +56,8 @@ object MetroCarsUtils {
       for (line <- listaLineas) {
         val cols = line.split(";")
         if (!cols(0).equals("train_id") && !cols(1).equals("departure_station") && !cols(2).equals("departure_time") && !cols(3).equals("destination")) {
-          schedules.add(new Schedule(id, StartUtils.searchMetrocar(cols(0).toInt), StartUtils.searchStation(cols(1).toString), cols(2) + " " + formatter.format(today), StartUtils.searchStation(cols(3).toString)))
+          schedules.add(new Schedule(id, StartUtils.searchMetrocar(cols(0).toInt),
+            StartUtils.searchStation(cols(1).toString), cols(2) + " " + formatter.format(today), StartUtils.searchStation(cols(3).toString)))
           id = id + 1
         }
       }
@@ -86,5 +87,20 @@ object MetroCarsUtils {
       }
     }
     cars
+  }
+
+  def countPassengersInAMetroCar(): Unit = {
+    var passengers: ArrayList[Passenger] = PassengerUtils.getPassengers()
+    for (a <- 0 to cars.size() - 1) {
+      for (b <- 0 to passengers.size() - 1) {
+        //Consulto los pasajeros que tienen asociado un MEtro car, es decir, que ya se subieron algun metrocar
+        if (passengers.get(b).currentMetroCar != null) {
+          if (cars.get(a).id == passengers.get(b).currentMetroCar.id) {
+            //Lo adiciono a la lista de pasajeros de ese MetroCar
+            cars.get(a).passengers.add(passengers.get(b))
+          }
+        }
+      }
+    }
   }
 }

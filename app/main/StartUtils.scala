@@ -1,4 +1,5 @@
 package main
+import java.text.SimpleDateFormat
 import java.util
 import java.util.ArrayList
 
@@ -83,5 +84,17 @@ object StartUtils {
       }
     }
     station
+  }
+
+  def parserStringToTime(time: String): java.util.Date = {
+    val formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy")
+    val date = formatter.parse(time)
+    date
+  }
+
+  def parserStringToTimeWithoutSeconds(time: String): java.util.Date = {
+    val formatter = new SimpleDateFormat("HH:mm dd-MM-yyyy")
+    val date = formatter.parse(time)
+    date
   }
 }
