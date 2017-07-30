@@ -14,8 +14,8 @@ object PassengerUtils {
   }
 
   def readPassengersFile(): ArrayList[Passenger] = {
-    //val path = System.getenv().get("sdm")
-    val path = "/home/farruza/dev/scala-projects/sdm/app/files"
+    val path = System.getenv().get("sdm")
+    //val path = "/home/farruza/dev/scala-projects/sdm/app/files"
     val filesHere = (new java.io.File(path)).listFiles
     var size = filesHere.length
 
@@ -34,7 +34,7 @@ object PassengerUtils {
           var metroCar: MetroCar = null
           var departureTime: String = null
 
-          if(sc != null) {
+          if (sc != null) {
             metroCar = sc.metroCar
             departureTime = sc.departureTime
           }
@@ -45,7 +45,7 @@ object PassengerUtils {
             cols(3) + " " + formatter.format(today),
             StartUtils.searchStation(cols(4).toString),
             metroCar, departureTime))
-          println(pass.get(pass.size()-1))
+          println(pass.get(pass.size() - 1))
         }
       }
     }
@@ -80,7 +80,7 @@ object PassengerUtils {
           for (s <- 0 until sch.get(m).schedules.size()) {
             var destination_route: String = StartUtils.getRoute(routes.get(r)._1).stations.get(0)
             if (routes.get(r)._2 == 1)
-              destination_route = StartUtils.getRoute(routes.get(r)._1).stations.get(StartUtils.getRoute(routes.get(r)._1).stations.size() -1)
+              destination_route = StartUtils.getRoute(routes.get(r)._1).stations.get(StartUtils.getRoute(routes.get(r)._1).stations.size() - 1)
 
             if (sch.get(m).schedules.get(s).departureStation.name.equals(entrance_station)
               && StartUtils.parserStringToTimeWithoutSeconds(entrance_time).before(StartUtils.parserStringToTime(sch.get(m).schedules.get(s).departureTime))

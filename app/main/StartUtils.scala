@@ -1,9 +1,10 @@
 package main
+
 import java.text.SimpleDateFormat
 import java.util
-import java.util.ArrayList
+import java.util.{ArrayList, Calendar}
 
-import models.{MetroCar, Station, Route}
+import models.{MetroCar, Route, Station}
 
 object StartUtils {
 
@@ -128,21 +129,21 @@ object StartUtils {
   private val stations: ArrayList[Station] = new ArrayList[Station]()
 
   // Creación de estaciones
-  stations.add(new Station(1, "Portal Americas", null, true, null, null))
-  stations.add(new Station(2, "Calle 42 sur", null, false, null, null))
-  stations.add(new Station(3, "Carrera 80", null, false, null, null))
-  stations.add(new Station(4, "Kennedy", null, false, null, null))
-  stations.add(new Station(5, "Avenida Boyaca", null, false, null, null))
-  stations.add(new Station(6, "Carrera 68", null, false, null, null))
-  stations.add(new Station(7, "Carrera 50", null, false, null, null))
-  stations.add(new Station(8, "NQS", null, false, null, null))
-  stations.add(new Station(9, "Narino", null, false, null, null))
-  stations.add(new Station(10, "Calle 1", null, true, null, null))
-  stations.add(new Station(11, "Calle 10", null, false, null, null))
-  stations.add(new Station(12, "Calle 26", null, false, null, null))
-  stations.add(new Station(13, "Calle 45", null, false, null, null))
-  stations.add(new Station(14, "Calle 63", null, false, null, null))
-  stations.add(new Station(15, "Calle 72", null, false, null, null))
+  stations.add(new Station(1, "Portal Americas", true))
+  stations.add(new Station(2, "Calle 42 sur", false))
+  stations.add(new Station(3, "Carrera 80", false))
+  stations.add(new Station(4, "Kennedy", false))
+  stations.add(new Station(5, "Avenida Boyaca", false))
+  stations.add(new Station(6, "Carrera 68", false))
+  stations.add(new Station(7, "Carrera 50", false))
+  stations.add(new Station(8, "NQS", false))
+  stations.add(new Station(9, "Narino", false))
+  stations.add(new Station(10, "Calle 1", true))
+  stations.add(new Station(11, "Calle 10", false))
+  stations.add(new Station(12, "Calle 26", false))
+  stations.add(new Station(13, "Calle 45", false))
+  stations.add(new Station(14, "Calle 63", false))
+  stations.add(new Station(15, "Calle 72", true))
 
   def getListStations(): ArrayList[Station] = stations
 
@@ -186,21 +187,54 @@ object StartUtils {
       var pos_destination: Int = -1
       for (s <- 0 until routes.get(r).stations.size()) {
 
-        if(routes.get(r).stations.get(s).equals(entraceStation)) {
+        if (routes.get(r).stations.get(s).equals(entraceStation)) {
           pos_entrace = s
         }
 
-        if(routes.get(r).stations.get(s).equals(destination)) {
+        if (routes.get(r).stations.get(s).equals(destination)) {
           pos_destination = s
         }
       }
-      if(pos_entrace != -1 && pos_destination != -1) {
-        if(pos_entrace > pos_destination)
-          rs.add((r,-1))
+      if (pos_entrace != -1 && pos_destination != -1) {
+        if (pos_entrace > pos_destination)
+          rs.add((r, -1))
         else
-          rs.add((r,1))
+          rs.add((r, 1))
       }
     }
     rs
+  }
+
+  def countPassengersPerStation(): Unit = {
+
+    var today = Calendar.getInstance().getTime()
+
+    for (a <- 0 until stations.size() - 1) {
+      stations.get(a).amountPassengers = 0
+    }
+
+    var pass = PassengerUtils.getPassengers()
+
+    var count = 0
+    for (a <- 0 until pass.size() - 1) {
+      if (pass.get(a).metroCar != null) {
+        var entrada = pass.get(a).entranceTime
+        var subida = pass.get(a).entranceTimeToMetroCar
+
+        var bajada1 = pass.get(a).departureTime
+        var bajada2 = pass.get(a).departureTimeToMetroCar
+
+        if (StartUtils.parserStringToTimeWithoutSeconds(entrada).before(today) && StartUtils.parserStringToTime(subida).after(today)) {
+          println("Pasajero: " + pass.get(a).entranceStation.name + "----" + pass.get(a).metroCar.schedules.get(0).departureStation.name)
+          println("El MetroCar: Salió: " + subida + " || Pasajero Subío estación: " + entrada)
+          for (b <- 0 to stations.size() - 1) {
+            if (pass.get(a).entranceStation.name.equals(stations.get(b).name)) {
+              count = count + 1
+              stations.get(b).amountPassengers = count
+            }
+          }
+        }
+      }
+    }
   }
 }

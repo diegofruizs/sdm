@@ -41,8 +41,8 @@ object MetroCarsUtils {
 
   def readSchedulesFile(): ArrayList[MetroCar] = {
 
-    //val path = System.getenv().get("sdm")
-    val path = "/home/farruza/dev/scala-projects/sdm/app/files"
+    val path = System.getenv().get("sdm")
+    //val path = "/home/farruza/dev/scala-projects/sdm/app/files"
     val filesHere = (new java.io.File(path)).listFiles
     var size = filesHere.length
     var schedules: ArrayList[Schedule] = new util.ArrayList[Schedule]()
@@ -90,14 +90,26 @@ object MetroCarsUtils {
   }
 
   def countPassengersInAMetroCar(): Unit = {
+    val today = Calendar.getInstance().getTime()
     var passengers: ArrayList[Passenger] = PassengerUtils.getPassengers()
+
+    for (a <- 0 until cars.size() - 1) {
+      cars.get(a).amountPassengers = 0
+    }
+
+    var count = 0
+
     for (a <- 0 to cars.size() - 1) {
       for (b <- 0 to passengers.size() - 1) {
         //Consulto los pasajeros que tienen asociado un MEtro car, es decir, que ya se subieron algun metrocar
         if (passengers.get(b).metroCar != null) {
           if (cars.get(a).id == passengers.get(b).metroCar.id) {
-            //Lo adiciono a la lista de pasajeros de ese MetroCar
-            cars.get(a).passengers.add(passengers.get(b))
+            var entranceToMetro = StartUtils.parserStringToTime(passengers.get(b).entranceTimeToMetroCar)
+            if (today.after(entranceToMetro)) {
+              //Lo adiciono a la lista de pasajeros de ese MetroCar
+              count = count + 1
+              cars.get(a).amountPassengers = count
+            }
           }
         }
       }

@@ -12,10 +12,14 @@ object Inicio {
 
   def main(args: Array[String]) {
 
-    // println(StartUtils.determinateRoute("Carrera 50", "Narino"))
-    var st = new Station(15, "Carrera 50", null, false, null, null)
+    PassengerUtils.readPassengersFile()
+    StartUtils.countPassengersPerStation()
+    var stations = StartUtils.getListStations()
 
-    // PassengerUtils.readPassengersFile()
+    for (a <- 0 until stations.size() - 1) {
+      println("Estacion: " + stations.get(a).name + " Con " + stations.get(a).amountPassengers + " Pasajeros")
+    }
+
     // println(PassengerUtils.searchMetroCarToGetOn_v2("Carrera 50", "09:32 30-07-2017", "Narino"))
   }
 }
