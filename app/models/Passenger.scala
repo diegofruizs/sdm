@@ -9,10 +9,9 @@ class Passenger(
                  var departureTime: String = null,
                  var destination: Station = new Station(),
                  var metroCar: MetroCar = null,
-                 var entranceTimeToMetroCar: String = null
+                 var entranceTimeToMetroCar: String = null,
+                 var departureTimeToMetroCar: String = null
                ) {
 
-  var departureTimeToMetroCar: String = null
-
-  override def toString(): String = "Passenger: " + id + " - " + entranceTime + " (" + entranceStation.name + ") " + entranceTimeToMetroCar
+  override def toString(): String = "Passenger: " + id + " - " + entranceTime + " (" + entranceStation.name + ") " + entranceTimeToMetroCar + " -> " + departureTimeToMetroCar
 }

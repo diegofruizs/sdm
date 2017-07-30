@@ -90,6 +90,7 @@ object MetroCarsUtils {
   }
 
   def countPassengersInAMetroCar(): Unit = {
+    println("Contando pasajeros en cada Metro Car")
     val today = Calendar.getInstance().getTime()
     var passengers: ArrayList[Passenger] = PassengerUtils.getPassengers()
 
@@ -104,11 +105,13 @@ object MetroCarsUtils {
         //Consulto los pasajeros que tienen asociado un MEtro car, es decir, que ya se subieron algun metrocar
         if (passengers.get(b).metroCar != null) {
           if (cars.get(a).id == passengers.get(b).metroCar.id) {
-            var entranceToMetro = StartUtils.parserStringToTime(passengers.get(b).entranceTimeToMetroCar)
-            if (today.after(entranceToMetro)) {
-              //Lo adiciono a la lista de pasajeros de ese MetroCar
-              count = count + 1
-              cars.get(a).amountPassengers = count
+            if (passengers.get(b).entranceTimeToMetroCar != null && passengers.get(b).departureTimeToMetroCar != null) {
+              var entranceToMetro = StartUtils.parserStringToTime(passengers.get(b).entranceTimeToMetroCar)
+              var departureToMetro = StartUtils.parserStringToTime(passengers.get(b).departureTimeToMetroCar)
+              if (entranceToMetro.before(today) && departureToMetro.after(today)) {
+                count = count + 1
+                cars.get(a).amountPassengers = count
+              }
             }
           }
         }

@@ -5,6 +5,7 @@ import java.util.ArrayList
 import javax.inject._
 import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.i18n.Messages
 
 import main.{MetroCarsUtils, StartUtils, PassengerUtils}
 import models.{MetroCar, Passenger, Station}
@@ -26,12 +27,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def index = Action {
     if (flagPass == false) {
-      println("Observable created for passengers...")
-      val o = Observable.interval(600000 millis)
-      o.subscribe(n => PassengerUtils.readPassengersFile())
+    //  println("Observable created for passengers...")
+    //  val o = Observable.interval(600000 millis)
+    //  o.subscribe(n => PassengerUtils.readPassengersFile())
       flagPass = true
     }
 
+    PassengerUtils.readPassengersFile()
     Ok(views.html.index("Bienvenido a SDM - Bogotá TransmiMetro", "TransmiMetro", null, 0, null, null))
   }
 
@@ -58,4 +60,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.index("Each Metrocar", "The number of passengers in each Metrocar", null, 3, null, cars))
   }
 
+  def columnAndBarChart = Action {
+    Ok(views.html.index("Report", "Density of Passenger", null, 4, null, null))
+  }
 }
