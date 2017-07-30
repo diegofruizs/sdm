@@ -18,7 +18,7 @@ $(function () {
         },
         yAxis: {
         	min: 1,
-            type: 'logarithmic',            
+            type: 'logarithmic',
             endOnTick: true,
             tickInterval: 1,
             minorTickInterval: 10,
@@ -47,7 +47,7 @@ $(function () {
             align: 'right',
             verticalAlign: 'top',
             x: -40,
-            y: 100,
+            y: 210,
             floating: true,
             borderWidth: 1,
             backgroundColor: '#FFFFFF',
@@ -67,47 +67,7 @@ $(function () {
             data: [973, 914, 4054, 732, 34]
         }]
     });
-	
-	$('#barStackedChart').highcharts({
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: 'Stacked bar chart'
-        },
-        xAxis: {
-            categories: ['Happiness', 'Crave', 'Gratirude', 'positive_unclassified', 'Frustration', 'Anger']
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: null
-            }
-        },
-        legend: {
-            backgroundColor: '#FFFFFF',
-            reversed: true
-        },
-        plotOptions: {
-            series: {
-                stacking: 'normal'
-            }
-        },
-            series: [{
-            name: 'positive',
-            data: [5, 3, 4, 7, 2, 10]
-        }, {
-            name: 'negative',
-            data: [2, 2, 3, 2, 1, 1]
-        }, {
-            name: 'surprise_shock',
-            data: [3, 4, 4, 2, 5, 7]
-        }, {
-            name: 'neutral',
-            data: [3, 4, 4, 2, 5, 3]
-        }]
-    });
-	
+
 	$('#columnChart').highcharts({
         chart: {
             type: 'column'
