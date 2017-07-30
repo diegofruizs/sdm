@@ -10,4 +10,5 @@ class Schedule(
                 var destination: Station = null
               ) {
 
+  override def toString(): String = "Schedule: " + id + " - " + departureTime + " (" + departureStation.name + " -> " + destination.name + ")"
 }

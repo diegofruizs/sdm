@@ -41,8 +41,8 @@ object MetroCarsUtils {
 
   def readSchedulesFile(): ArrayList[MetroCar] = {
 
-    val path = System.getenv().get("sdm")
-    //val path = "/home/farruza/dev/scala-projects/sdm/app/files"
+    //val path = System.getenv().get("sdm")
+    val path = "/home/farruza/dev/scala-projects/sdm/app/files"
     val filesHere = (new java.io.File(path)).listFiles
     var size = filesHere.length
     var schedules: ArrayList[Schedule] = new util.ArrayList[Schedule]()
@@ -94,8 +94,8 @@ object MetroCarsUtils {
     for (a <- 0 to cars.size() - 1) {
       for (b <- 0 to passengers.size() - 1) {
         //Consulto los pasajeros que tienen asociado un MEtro car, es decir, que ya se subieron algun metrocar
-        if (passengers.get(b).currentMetroCar != null) {
-          if (cars.get(a).id == passengers.get(b).currentMetroCar.id) {
+        if (passengers.get(b).metroCar != null) {
+          if (cars.get(a).id == passengers.get(b).metroCar.id) {
             //Lo adiciono a la lista de pasajeros de ese MetroCar
             cars.get(a).passengers.add(passengers.get(b))
           }

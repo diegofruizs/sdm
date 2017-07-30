@@ -28,7 +28,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def index = Action {
     if (flagPass == false) {
       println("Observable created for passengers...")
-      val o = Observable.interval(60000 millis)
+      val o = Observable.interval(600000 millis)
       o.subscribe(n => PassengerUtils.readPassengersFile())
       flagPass = true
     }
@@ -43,7 +43,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def location = Action {
     if (flagMetro == false) {
       println("Observable created for schedules...")
-      val o = Observable.interval(60000 millis)
+      val o = Observable.interval(600000 millis)
       o.subscribe(x => MetroCarsUtils.readSchedulesFile())
       flagMetro = true
     }
@@ -52,7 +52,6 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def metro = Action {
-    PassengerUtils.searchMetroCarToGetOn()
     MetroCarsUtils.countPassengersInAMetroCar()
     var cars: util.ArrayList[MetroCar] = MetroCarsUtils.getSchedules()
     Ok(views.html.index("Each Metrocar", "The number of passengers in each Metrocar", null, 3, null, cars))

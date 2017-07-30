@@ -12,18 +12,10 @@ object Inicio {
 
   def main(args: Array[String]) {
 
-    PassengerUtils.readPassengersFile()
-    PassengerUtils.searchMetroCarToGetOn()
-    MetroCarsUtils.countPassengersInAMetroCar()
-    var cars: util.ArrayList[MetroCar] = MetroCarsUtils.getSchedules()
+    // println(StartUtils.determinateRoute("Carrera 50", "Narino"))
+    var st = new Station(15, "Carrera 50", null, false, null, null)
 
-    println("Size of cars " + cars.size())
-
-    for (a <- 0 to cars.size() - 1) {
-      if (cars.get(a).passengers.size() > 0) {
-        println("En carro: "+ cars.get(a).id +" Hay "+cars.get(a).passengers.size())
-      }
-    }
-
+    // PassengerUtils.readPassengersFile()
+    // println(PassengerUtils.searchMetroCarToGetOn_v2("Carrera 50", "09:32 30-07-2017", "Narino"))
   }
 }
