@@ -19,17 +19,19 @@ import scala.concurrent.duration._
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-  private var cars:     ArrayList[MetroCar] = StartUtils.getListMetroCars()
+  private var cars: ArrayList[MetroCar] = StartUtils.getListMetroCars()
   private var stations: ArrayList[Station] = StartUtils.getListStations()
   private var schedule: Int = 0
-  private var flag: Boolean = false
+  private var flagPass: Boolean = false
+  private var flagMetro: Boolean = false
+
 
   def index = Action {
-    if(flag == false) {
-      println("Observable created...")
+    if (flagPass == false) {
+      println("Observable created for passengers...")
       val o = Observable.interval(60000 millis)
       o.subscribe(n => PassengerUtils.readPassengersFile())
-      flag = true
+      flagPass = true
     }
 
     Ok(views.html.index("Bienvenido a SDM - Bogotá TransmiMetro", "TransmiMetro", null, 0, null, null))
@@ -40,6 +42,12 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def location = Action {
+    if (flagMetro == false) {
+      println("Observable created for schedules...")
+      val o = Observable.interval(60000 millis)
+      o.subscribe(x => MetroCarsUtils.readSchedulesFile())
+      flagMetro = true
+    }
     var carsl = MetroCarsUtils.searchCurrentStation()
     Ok(views.html.index("Location", "Metrocar location", null, 2, carsl, null))
   }
@@ -47,4 +55,5 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def metro = Action {
     Ok(views.html.index("Each Metrocar", "The number of passengers in each Metrocar", null, 3, null, cars))
   }
+
 }
