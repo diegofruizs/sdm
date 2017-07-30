@@ -15,3 +15,4 @@ libraryDependencies += "com.typesafe.play" %% "play-iteratees" % "2.6.1"
 libraryDependencies += "com.typesafe.play" %% "play-iteratees-reactive-streams" % "2.6.1"
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.0"
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
+
