@@ -2,7 +2,8 @@ package main
 
 import java.text.SimpleDateFormat
 import java.util
-import java.util.{ArrayList, Calendar}
+import java.util.{ArrayList, Calendar, Date}
+
 import models.{MetroCar, Schedule, Station}
 
 object MetroCarsUtils {
@@ -16,10 +17,16 @@ object MetroCarsUtils {
   def searchCurrentStation(): ArrayList[MetroCar] = {
     val today = Calendar.getInstance().getTime()
     for (a <- 0 to cars.size() - 1) {
+      cars.get(a).currentSchedule = null
+      var hora1=new Date()
+      var hora2=new Date()
       for (b <- 1 to cars.get(a).schedules.size() - 1) {
-        if (parserStringToTime(cars.get(a).schedules.get(b - 1).departureTime).before(today) &&
-          parserStringToTime(cars.get(a).schedules.get(b).departureTime).after(today)) {
-          cars.get(a).currentSchedule = cars.get(a).schedules.get(b)
+        if (cars.get(a).currentSchedule == null) {
+          hora1 = parserStringToTime(cars.get(a).schedules.get(b - 1).departureTime)
+          hora2 = parserStringToTime(cars.get(a).schedules.get(b).departureTime)
+          if (hora1.before(today) && hora2.after(today)) {
+            cars.get(a).currentSchedule = cars.get(a).schedules.get(b)
+          }
         }
       }
     }
@@ -27,7 +34,7 @@ object MetroCarsUtils {
   }
 
   def parserStringToTime(time: String): java.util.Date = {
-    val formatter = new SimpleDateFormat("hh:mm:ss dd-MM-yyyy")
+    val formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy")
     val date = formatter.parse(time)
     date
   }

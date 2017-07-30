@@ -16,7 +16,7 @@
             @if(metros != null) {
                 @for(a <- 0 to metros.size() - 1) {
                     <div class="arrow">
-                        @if(metros.get(a).currentSchedule.departureTime != null) {
+                        @if(metros.get(a).currentSchedule != null) {
                             <table>
                                 <tr>
                                     <th>Id del Metro</th>
