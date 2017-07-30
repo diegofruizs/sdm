@@ -27,6 +27,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def index = Action {
     if (flagPass == false) {
+      createThread
       println("Observable created for passengers...")
       val o = Observable.interval(600000 millis)
       o.subscribe(n => PassengerUtils.readPassengersFile())
@@ -61,5 +62,16 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def densityPassenger = Action {
     Ok(views.html.index("Report", "Density of Passenger", null, 4, null, null))
+  }
+
+  def createThread(): Unit = {
+
+    new Thread(new Runnable() {
+      def run() {
+        MetroCarsUtils.readSchedulesFile()
+        PassengerUtils.readPassengersFile()
+      }
+    }).start()
+
   }
 }
