@@ -60,7 +60,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.index("Each Metrocar", "The number of passengers in each Metrocar", null, 3, null, cars))
   }
 
-  def columnAndBarChart = Action {
+  def densityPassenger = Action {
     Ok(views.html.index("Report", "Density of Passenger", null, 4, null, null))
   }
 }
