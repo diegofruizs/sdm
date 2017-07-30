@@ -61,17 +61,16 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def densityPassenger = Action {
+    PassengerUtils.densityPassenger("Carrera 80")
     Ok(views.html.index("Report", "Density of Passenger", null, 4, null, null))
   }
 
   def createThread(): Unit = {
-
     new Thread(new Runnable() {
       def run() {
         MetroCarsUtils.readSchedulesFile()
         PassengerUtils.readPassengersFile()
       }
     }).start()
-
   }
 }
