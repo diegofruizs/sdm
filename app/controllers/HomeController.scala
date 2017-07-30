@@ -27,13 +27,12 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def index = Action {
     if (flagPass == false) {
-    //  println("Observable created for passengers...")
-    //  val o = Observable.interval(600000 millis)
-    //  o.subscribe(n => PassengerUtils.readPassengersFile())
+      println("Observable created for passengers...")
+      val o = Observable.interval(600000 millis)
+      o.subscribe(n => PassengerUtils.readPassengersFile())
       flagPass = true
     }
 
-    PassengerUtils.readPassengersFile()
     Ok(views.html.index("Bienvenido a SDM - Bogotá TransmiMetro", "TransmiMetro", null, 0, null, null))
   }
 
