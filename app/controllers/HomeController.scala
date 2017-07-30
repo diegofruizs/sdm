@@ -68,20 +68,19 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     var stations = StartUtils.getListStations()
     var test = StartUtils.getListStations()
     var listStations = stations.asScala.toSet
-
+    
+    PassengerUtils.densityPassenger("Carrera 80")
     Ok(views.html.indexGraph("Report", "Density of Passenger", listStations, stations))
   }
 
 
 
   def createThread(): Unit = {
-
     new Thread(new Runnable() {
       def run() {
         MetroCarsUtils.readSchedulesFile()
         PassengerUtils.readPassengersFile()
       }
     }).start()
-
   }
 }

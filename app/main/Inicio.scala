@@ -12,6 +12,16 @@ object Inicio {
 
   def main(args: Array[String]) {
 
+    var list:ArrayList[Passenger] = new ArrayList[Passenger]()
+    list.add(new Passenger(1,
+      "10:50:56 30-07-2017",
+      StartUtils.searchStation("Carrera 80"),
+      "11:15:56 30-07-2017",
+      StartUtils.searchStation("Carrera 80"),
+      null, null, null))
+
+    // PassengerUtils.readPassengersFile()
+    PassengerUtils.densityPassenger("Carrera 80")
 
     /*
     for test of amount of passengers per station
