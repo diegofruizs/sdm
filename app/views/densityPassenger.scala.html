@@ -1,5 +1,9 @@
 @import java.util
-@(message: String, titlePage: String, style: String = "scala")
+@import helper._
+@import models.Station
+@(message: String, titlePage: String, style: String = "scala", stations: Set[Station], stationsList: java.util.ArrayList[Station])
+@import helper._
+
 
 @defining(play.core.PlayVersion.current) { version =>
     <section id="top">
@@ -11,32 +15,47 @@
         <article>
             <h1>@titlePage</h1>
             <div class="row">
-              <div class="col-md-12">
-	              <div class="panel panel-info">
-        					<div class="panel-heading">
-        						<h3 class="panel-title">Bar Chart</h3>
-        					</div>
-        					<div class="panel-body">
-        						<div id="barChart" class="chart-holder"></div>
-        					</div>
-        				</div>
-        			</div><!-- /span12 -->
-        		</div><!-- /row -->
+                <div class="col-md-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Buscar estación</h3>
+                        </div>
+                        <div class="panel-body">
+                            <select class="selected" id="stationSelect">
 
+                            @for(a <- 0 to stationsList.size() - 1) {
+                                <option value=@stationsList.get(a).id >@stationsList.get(a).name</option>
+                            }
+                            </select>
+                            <button id="btnMostrar" class="button" onclick="buscar()">Mostrar Gráfico</button>
+                        </div>
+                    </div>
+                </div><!-- /span12 -->
+            </div><!-- /row -->
             <div class="row">
-      			<div class="col-md-12">
-      				<div class="panel panel-info">
-      					<div class="panel-heading">
-      						<h3 class="panel-title">Column Chart</h3>
-      					</div>
-      					<div class="panel-body">
-      						<div id="columnChart" class="chart-holder"></div>
-      					</div>
-      				</div>
-      			</div><!-- /span12 -->
+                <div class="col-md-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><div id="nameStation"></div></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="columnChart" class="chart-holder"></div>
+                        </div>
+                    </div>
+                </div><!-- /span12 -->
             </div><!-- /row -->
 
         </article>
+        <script>
+                var places = {
+                    @for((item, index) <- stations.zipWithIndex) {
+                    @if(index != stations.size-1) {
+                    "@item.id" : "@Html(item.name)",
+                    }
+                }};
+            
+
+        </script>
         <aside>
             <h3>Hora actual: <div id="txt"></div></h3>
             <ul>

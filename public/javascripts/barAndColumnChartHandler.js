@@ -1,109 +1,63 @@
-
 $(function () {
-	$('#barChart').highcharts({
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: null
-        },
-        subtitle: {
-            text: null
-        },
-        xAxis: {
-            categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
-            title: {
-                text: null
-            }
-        },
-        yAxis: {
-        	min: 1,
-            type: 'logarithmic',
-            endOnTick: true,
-            tickInterval: 1,
-            minorTickInterval: 10,
-            gridLineWidth: 0.1,
-            //min: 0,
-            title: {
-                text: null,
-                align: 'high'
-            },
-            labels: {
-                overflow: 'justify'
-            }
-        },
-        tooltip: {
-            valueSuffix: ' millions'
-        },
-        plotOptions: {
-            bar: {
-                dataLabels: {
-                    enabled: true
-                }
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -40,
-            y: 210,
-            floating: true,
-            borderWidth: 1,
-            backgroundColor: '#FFFFFF',
-            shadow: true
-        },
-        credits: {
-            enabled: false
-        },
-        series: [{
-            name: 'Year 1800',
-            data: [107, 31, 635, 203, 2]
-        }, {
-            name: 'Year 1900',
-            data: [133, 156, 947, 408, 6]
-        }, {
-            name: 'Year 2008',
-            data: [973, 914, 4054, 732, 34]
-        }]
-    });
 
-	$('#columnChart').highcharts({
+});
+
+function buscar() {
+
+    console.log(places);
+
+    var x = $('#stationSelect option').filter(':selected').text();
+    $('#nameStation').html("Información correspondiente a la estación: " + x)
+    drawChart(x)
+}
+
+function drawChart(nameOfStation) {
+
+
+    $('#columnChart').highcharts({
         chart: {
             type: 'column'
         },
         title: {
-            text: null
+            text: "Densidad de pasajeros durante el dia"
         },
         subtitle: {
-            text: null
+            text: nameOfStation
         },
         xAxis: {
             categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec'
+                '04:00:00 - 04:10:00',
+                '04:10:00 - 04:20:00',
+                '04:20:00 - 04:30:00',
+                '04:30:00 - 04:40:00',
+                '04:40:00 - 04:50:00',
+                '04:50:00 - 05:00:00',
+                '05:00:00 - 05:10:00',
+                '05:10:00 - 05:20:00',
+                '05:20:00 - 05:30:00',
+                '05:30:00 - 05:40:00',
+                '05:40:00 - 05:50:00',
+                '05:50:00 - 06:00:00',
+                '06:00:00 - 06:10:00',
+                '06:10:00 - 06:20:00',
+                '06:20:00 - 06:30:00',
+                '06:30:00 - 06:40:00',
+                '06:40:00 - 06:50:00',
+                '06:50:00 - 07:00:00',
+                '07:00:00 - 07:10:00'
+
             ]
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Counts'
+                text: 'Cantidad'
             }
         },
         tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true
@@ -116,20 +70,9 @@ $(function () {
         },
         series: [{
             name: 'Tokyo',
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-        }, {
-            name: 'New York',
-            data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-        }, {
-            name: 'London',
-            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-        }, {
-            name: 'Berlin',
-            data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+            data: [300, 200, 250, 30, 40, 100, 180, 500, 10, 50, 80, 12, 34, 23, 56, 24, 34, 875, 244]
 
         }]
     });
-});
+
+}

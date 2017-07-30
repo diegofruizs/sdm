@@ -3,14 +3,18 @@ package controllers
 import java.util
 import java.util.ArrayList
 import javax.inject._
+
 import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.i18n.Messages
-
-import main.{MetroCarsUtils, StartUtils, PassengerUtils}
+import main.{MetroCarsUtils, PassengerUtils, StartUtils}
 import models.{MetroCar, Passenger, Station}
+import play.api.libs.json.Json
+import scala.collection.JavaConverters._
+
 import play.api.mvc._
 import rx.lang.scala.Observable
+
 import scala.concurrent.duration._
 
 /**
@@ -61,7 +65,11 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def densityPassenger = Action {
-    Ok(views.html.index("Report", "Density of Passenger", null, 4, null, null))
+    var stations = StartUtils.getListStations()
+    var test = StartUtils.getListStations()
+    var listStations = stations.asScala.toSet
+
+    Ok(views.html.indexGraph("Report", "Density of Passenger", listStations, stations))
   }
 
   def createThread(): Unit = {
