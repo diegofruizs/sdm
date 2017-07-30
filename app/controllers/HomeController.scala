@@ -5,6 +5,7 @@ import java.util.ArrayList
 import javax.inject._
 import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.i18n.Messages
 
 import main.{MetroCarsUtils, StartUtils, PassengerUtils}
 import models.{MetroCar, Passenger, Station}
@@ -57,4 +58,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.index("Each Metrocar", "The number of passengers in each Metrocar", null, 3, null, cars))
   }
 
+  def columnAndBarChart = Action {
+    Ok(views.html.index("Report", "Density of Passenger", null, 4, null, null))
+  }
 }

@@ -13,9 +13,9 @@ object Inicio {
   def main(args: Array[String]) {
 
     // println(StartUtils.determinateRoute("Carrera 50", "Narino"))
-    var st = new Station(15, "Carrera 50", null, false, null, null)
+    // var st = new Station(15, "Carrera 80", null, false, null, null)
 
-    // PassengerUtils.readPassengersFile()
-    // println(PassengerUtils.searchMetroCarToGetOn_v2("Carrera 50", "09:32 30-07-2017", "Narino"))
+    PassengerUtils.readPassengersFile()
+    // println(PassengerUtils.searchMetroCarToGetOn_v2("Carrera 80", "09:32 30-07-2017", "Calle 45"))
   }
 }
