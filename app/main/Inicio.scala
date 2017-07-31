@@ -14,6 +14,8 @@ object Inicio {
 
   def main(args: Array[String]) {
 
+    MetroCarsUtils.readSchedulesFile()
+
     /*var list:ArrayList[Passenger] = new ArrayList[Passenger]()
     list.add(new Passenger(1,
       "10:50:56 30-07-2017",

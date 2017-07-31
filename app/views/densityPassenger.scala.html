@@ -2,37 +2,37 @@
 @import helper._
 @import models.Station
 @(message: String, titlePage: String, style: String = "scala", stations: Set[Station], stationsList: java.util.ArrayList[Station])
-@import helper._
+    @import helper._
 
 
-@defining(play.core.PlayVersion.current) { version =>
-    <section id="top">
-        <div class="wrapper">
-            <h1><a href="@routes.HomeController.index()">@message</a></h1>
-        </div>
-    </section>
-    <div id="content" class="wrapper doc">
-        <article>
-            <h1>@titlePage</h1>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Buscar estación</h3>
+    @defining(play.core.PlayVersion.current) { version =>
+        <section id="top">
+            <div class="wrapper">
+                <h1><a href="@routes.HomeController.index()">@message</a></h1>
+            </div>
+        </section>
+        <div id="content" class="wrapper doc">
+            <article>
+                <h1>@titlePage</h1>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Buscar estación</h3>
+                            </div>
+                            <div class="panel-body">
+                                <select class="selected" id="stationSelect">
+
+                                @for(a <- 0 to stationsList.size() - 1) {
+                                    <option value=@stationsList.get(a).id >@stationsList.get(a).name</option>
+                                }
+                                </select>
+                                <button id="btnMostrar" class="button" onclick="buscar()">Mostrar Gráfico</button>
+                            </div>
                         </div>
-                        <div class="panel-body">
-                            <select class="selected" id="stationSelect">
-
-                            @for(a <- 0 to stationsList.size() - 1) {
-                                <option value=@stationsList.get(a).id >@stationsList.get(a).name</option>
-                            }
-                            </select>
-                            <button id="btnMostrar" class="button" onclick="buscar()">Mostrar Gráfico</button>
-                        </div>
-                    </div>
-                </div><!-- /span12 -->
-            </div><!-- /row -->
-            <div class="row">
+                    </div><!-- /span12 -->
+                </div><!-- /row -->
+                <!--<div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -43,40 +43,50 @@
                         </div>
                     </div>
                 </div><!-- /span12 -->
-            </div><!-- /row -->
+                <!--</div>--><!-- /row -->
 
-        </article>
-        <script>
-                var places = {
-                    @for((item, index) <- stations.zipWithIndex) {
-                    @if(index != stations.size-1) {
-                    "@item.id" : "@Html(item.name)",
-                    }
-                }};
-            
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><div id="nameStation"></div></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="barChart" class="chart-holder" style="height: 900px;"></div>
+                            </div>
+                        </div>
+                    </div><!-- /span12 -->
+                </div><!-- /row -->
 
-        </script>
-        <aside>
-            <h3>Hora actual: <div id="txt"></div></h3>
-            <ul>
-                <li><a href="@routes.HomeController.index()">Home</a></li>
-            </ul>
-            <h3>Passengers</h3>
-            <ul>
-                <li><a href="@routes.HomeController.passengers()">The amount of passenger at every station</a></li>
-            </ul>
-            <h3>Location</h3>
-            <ul>
-                <li><a href="@routes.HomeController.location()">Metrocar location</a></li>
-            </ul>
-            <h3>Each Metrocar</h3>
-            <ul>
-                <li><a href="@routes.HomeController.metro()">The number of passengers in each Metrocar</a></li>
-            </ul>
-            <h3>Reports</h3>
-            <ul>
-                <li><a href="@routes.HomeController.densityPassenger()">Density of Passenger</a></li>
-            </ul>
-        </aside>
-    </div>
-}
+                <table id='summaryOfResults' border='1'>
+                    <tbody id="body">
+
+                    </tbody>
+                </table>
+
+            </article>
+
+            <aside>
+                <h3>Hora actual: <div id="txt"></div></h3>
+                <ul>
+                    <li><a href="@routes.HomeController.index()">Home</a></li>
+                </ul>
+                <h3>Passengers</h3>
+                <ul>
+                    <li><a href="@routes.HomeController.passengers()">The amount of passenger at every station</a></li>
+                </ul>
+                <h3>Location</h3>
+                <ul>
+                    <li><a href="@routes.HomeController.location()">Metrocar location</a></li>
+                </ul>
+                <h3>Each Metrocar</h3>
+                <ul>
+                    <li><a href="@routes.HomeController.metro()">The number of passengers in each Metrocar</a></li>
+                </ul>
+                <h3>Reports</h3>
+                <ul>
+                    <li><a href="@routes.HomeController.densityPassenger()">Density of Passenger</a></li>
+                </ul>
+            </aside>
+        </div>
+    }

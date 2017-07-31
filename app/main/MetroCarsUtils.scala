@@ -41,8 +41,8 @@ object MetroCarsUtils {
 
   def readSchedulesFile(): ArrayList[MetroCar] = {
 
-    //val path = System.getenv().get("sdm")
-    val path = "/home/farruza/dev/scala-projects/sdm/app/files"
+    val path = System.getenv().get("sdm")
+    //val path = "/home/farruza/dev/scala-projects/sdm/app/files"
     val filesHere = (new java.io.File(path)).listFiles
     var size = filesHere.length
     var schedules: ArrayList[Schedule] = new util.ArrayList[Schedule]()

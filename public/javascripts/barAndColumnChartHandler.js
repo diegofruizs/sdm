@@ -4,25 +4,30 @@ $(function () {
 
 function buscar() {
 
-    console.log(places);
-
     var nameStation = $('#stationSelect option').filter(':selected').text();
     var idStation = $('#stationSelect option').filter(':selected').val();
     $('#nameStation').html("Información correspondiente a la estación: " + nameStation)
-    drawChart(nameStation);
-    getDataFromBack(idStation);
+
+
+    getDataFromBack(idStation, nameStation);
 
 }
 
-function getDataFromBack(id) {
+function getDataFromBack(id, nameStation) {
 
+    var respuesta = null;
+    var obj = null;
     $.ajax({
-        url: 'http://localhost:9000/densityPassenger',
-        data: {
-            id: id
-        },
+        url: 'http://localhost:9000/rsdensityPassenger/' + id,
+
         error: function (error) {
-            console.log("Error: " + error);
+            respuesta = error.responseText;
+            obj = $.parseJSON(respuesta);
+            console.log(obj);
+            console.log(obj.data[0].range);
+            dataForChart(obj, nameStation)
+
+
         },
         dataType: 'jsonp',
         success: function (data) {
@@ -32,8 +37,59 @@ function getDataFromBack(id) {
     });
 }
 
-function drawChart(nameOfStation) {
+function dataForChart(obj, nameStaion) {
+    var arrayData = obj.data;
+    var ranges = [];
+    var serieEntrance = [];
+    var serieDeparture = [];
 
+    for (var i = 0; i < arrayData.length; i += 1) {
+        ranges[i] = arrayData[i].range;
+
+        serieEntrance[i] = arrayData[i].amount_entering;
+
+        serieDeparture[i] = arrayData[i].amount_leaving;
+
+    }
+    drawChart(nameStaion, ranges, serieEntrance, serieDeparture)
+    writeTable(ranges, serieEntrance, serieDeparture)
+
+}
+
+function writeTable(range, seriesEntrada, seriesSalida) {
+    var count = 0;
+    // declare html variable (a string holder):
+    var html = '';
+
+    $('#body').empty();
+
+    html += '<tr><th><b>';
+    html += 'Rangos de 10 minutos en el dia';
+    html += '</b></th><th><b>';
+    html += 'Entrada de pasajeros a la estación';
+    html += '</b></th><th><b>';
+    html += 'Salida de pasajeros de la estación';
+    html += '</b></th></tr>';
+    for (var i = 0; i < range.length; i++) {
+        // add opening <tr> tag to the string:
+        html += '<tr>';
+        for (var j = 0; j < 1; j++) {
+            // add <td> elements to the string:
+            html += '<td>' + range[count] + '</td>';
+            html += '<td>' + seriesEntrada[count] + '</td>';
+            html += '<td>' + seriesSalida[count] + '</td>';
+            count++;
+        }
+        // add closing </tr> tag to the string:
+        html += '</tr>';
+    }
+    //append the whole created html string to the body:
+    $('#body').append(html);
+    // reset the count:
+    count = 0;
+}
+
+function drawChart(nameOfStation, ranges, serieEntrance, serieDeparture) {
 
     $('#columnChart').highcharts({
         chart: {
@@ -46,28 +102,7 @@ function drawChart(nameOfStation) {
             text: nameOfStation
         },
         xAxis: {
-            categories: [
-                '04:00:00 - 04:10:00',
-                '04:10:00 - 04:20:00',
-                '04:20:00 - 04:30:00',
-                '04:30:00 - 04:40:00',
-                '04:40:00 - 04:50:00',
-                '04:50:00 - 05:00:00',
-                '05:00:00 - 05:10:00',
-                '05:10:00 - 05:20:00',
-                '05:20:00 - 05:30:00',
-                '05:30:00 - 05:40:00',
-                '05:40:00 - 05:50:00',
-                '05:50:00 - 06:00:00',
-                '06:00:00 - 06:10:00',
-                '06:10:00 - 06:20:00',
-                '06:20:00 - 06:30:00',
-                '06:30:00 - 06:40:00',
-                '06:40:00 - 06:50:00',
-                '06:50:00 - 07:00:00',
-                '07:00:00 - 07:10:00'
-
-            ]
+            categories: ranges
         },
         yAxis: {
             min: 0,
@@ -89,10 +124,80 @@ function drawChart(nameOfStation) {
                 borderWidth: 0
             }
         },
-        series: [{
-            name: 'Intervalos de tiempo',
-            data: [300, 200, 250, 30, 40, 100, 180, 500, 10, 50, 80, 12, 34, 23, 56, 24, 34, 875, 244]
+        series: [
+            {
+                name: "Entrada",
+                data: serieEntrance
+            },
+            {
+                name: "Salida",
+                data: serieDeparture
+            }
+        ]
+    });
 
+    $('#barChart').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: "Densidad de pasajeros durante el dia"
+        },
+        subtitle: {
+            text: nameOfStation
+        },
+        xAxis: {
+            categories: ranges,
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 1,
+            type: 'logarithmic',
+            endOnTick: true,
+            tickInterval: 1,
+            minorTickInterval: 10,
+            gridLineWidth: 0.1,
+            //min: 0,
+            title: {
+                text: null,
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' millions'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 210,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: '#FFFFFF',
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Entrada',
+            data: serieEntrance
+        }, {
+            name: 'Salida',
+            data: serieDeparture
         }]
     });
 
