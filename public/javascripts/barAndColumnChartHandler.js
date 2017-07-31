@@ -6,9 +6,30 @@ function buscar() {
 
     console.log(places);
 
-    var x = $('#stationSelect option').filter(':selected').text();
-    $('#nameStation').html("Información correspondiente a la estación: " + x)
-    drawChart(x)
+    var nameStation = $('#stationSelect option').filter(':selected').text();
+    var idStation = $('#stationSelect option').filter(':selected').val();
+    $('#nameStation').html("Información correspondiente a la estación: " + nameStation)
+    drawChart(nameStation);
+    getDataFromBack(idStation);
+
+}
+
+function getDataFromBack(id) {
+
+    $.ajax({
+        url: 'http://localhost:9000/densityPassenger',
+        data: {
+            id: id
+        },
+        error: function (error) {
+            console.log("Error: " + error);
+        },
+        dataType: 'jsonp',
+        success: function (data) {
+            console.log(data);
+        },
+        type: 'GET'
+    });
 }
 
 function drawChart(nameOfStation) {
@@ -69,7 +90,7 @@ function drawChart(nameOfStation) {
             }
         },
         series: [{
-            name: 'Tokyo',
+            name: 'Intervalos de tiempo',
             data: [300, 200, 250, 30, 40, 100, 180, 500, 10, 50, 80, 12, 34, 23, 56, 24, 34, 875, 244]
 
         }]
