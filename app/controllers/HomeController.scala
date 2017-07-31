@@ -12,9 +12,7 @@ import models.{MetroCar, Passenger, Station}
 import play.api.libs.json.Json
 import scala.collection.JavaConverters._
 
-import play.api.mvc._
 import rx.lang.scala.Observable
-
 import scala.concurrent.duration._
 
 /**
@@ -68,8 +66,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     var stations = StartUtils.getListStations()
     var test = StartUtils.getListStations()
     var listStations = stations.asScala.toSet
-    
-    PassengerUtils.densityPassenger("Carrera 80")
+
     Ok(views.html.indexGraph("Report", "Density of Passenger", listStations, stations))
   }
 

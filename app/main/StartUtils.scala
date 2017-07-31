@@ -167,6 +167,16 @@ object StartUtils {
     station
   }
 
+  def searchStationById(station_id: Int): Station = {
+    var station: Station = null
+    for (a <- 0 to stations.size() - 1) {
+      if (stations.get(a).id == station_id) {
+        station = stations.get(a)
+      }
+    }
+    station
+  }
+
   def parserStringToTime(time: String): java.util.Date = {
     val formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy")
     val date = formatter.parse(time)

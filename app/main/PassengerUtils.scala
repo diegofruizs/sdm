@@ -117,8 +117,12 @@ object PassengerUtils {
     (sc_ent, sc_dep)
   }
 
-  def densityPassenger(station: String): ArrayList[DensityPassenger] = {
+  def densityPassenger(station_id: Int): ArrayList[DensityPassenger] = {
     var rs: ArrayList[DensityPassenger] = new ArrayList[DensityPassenger]()
+    var station_ent: Station = StartUtils.searchStationById(station_id)
+    var station = ""
+    if(station_ent != null)
+      station = station_ent.name
 
     var initial_time: Calendar = Calendar.getInstance()
     initial_time.set(Calendar.MILLISECOND, 0);
@@ -161,6 +165,68 @@ object PassengerUtils {
       if(pass.get(a).destination.name.equals(station)) {
         if(pass.get(a).departureTimeToMetroCar != null) {
           var departureTime: Date = StartUtils.parserStringToTime(pass.get(a).departureTimeToMetroCar)
+          var flag: Boolean = false
+          for(i <- 0 until rs.size() if !flag) {
+            if( departureTime.compareTo(rs.get(i).initial_time) >= 0 && departureTime.compareTo(rs.get(i).final_time) < 0 ) {
+              rs.get(i).amountPassengersLeaving = rs.get(i).amountPassengersLeaving + 1
+              flag = true
+            }
+          }
+        }
+      }
+    }
+
+    for(x <- 0 until rs.size())
+      if( rs.get(x).amountPassengersEntering > 0 || rs.get(x).amountPassengersLeaving > 0 )
+        println(rs.get(x))
+    rs
+  }
+
+  // PRUEBA
+  def densityPassengerJSON(station: String, list: ArrayList[Passenger]): ArrayList[DensityPassenger] = {
+    var rs: ArrayList[DensityPassenger] = new ArrayList[DensityPassenger]()
+
+    var initial_time: Calendar = Calendar.getInstance()
+    initial_time.set(Calendar.MILLISECOND, 0);
+    initial_time.set(Calendar.SECOND, 0);
+    initial_time.set(Calendar.MINUTE, 0);
+    initial_time.set(Calendar.HOUR_OF_DAY, 4);
+
+    var final_time: Calendar = Calendar.getInstance()
+    final_time.set(Calendar.MILLISECOND, 0);
+    final_time.set(Calendar.SECOND, 59);
+    final_time.set(Calendar.MINUTE, 59);
+    final_time.set(Calendar.HOUR_OF_DAY, 23);
+
+    var interval_time: Calendar = Calendar.getInstance()
+    interval_time.setTime(initial_time.getTime)
+    interval_time.add(Calendar.MINUTE, 10);
+
+    val formatter = new SimpleDateFormat("HH:mm")
+
+    while(interval_time.before(final_time)) {
+      var range: String = formatter.format(initial_time.getTime) + " -> " + formatter.format(interval_time.getTime)
+      rs.add(new DensityPassenger(range, initial_time.getTime, interval_time.getTime, 0, 0))
+      initial_time.setTime(interval_time.getTime)
+      interval_time.add(Calendar.MINUTE, 10);
+    }
+    for (a <- 0 until list.size()) {
+      // Hora de Ingreso
+      if(list.get(a).entranceStation.name.equals(station)) {
+        var entranceTime: Date = StartUtils.parserStringToTimeWithoutSeconds(list.get(a).entranceTime)
+        var flag: Boolean = false
+        for(i <- 0 until rs.size() if !flag) {
+          if( entranceTime.compareTo(rs.get(i).initial_time) >= 0 && entranceTime.compareTo(rs.get(i).final_time) < 0 ) {
+            rs.get(i).amountPassengersEntering = rs.get(i).amountPassengersEntering + 1
+            flag = true
+          }
+        }
+      }
+
+      // Hora de salida
+      if(list.get(a).destination.name.equals(station)) {
+        if(list.get(a).departureTimeToMetroCar != null) {
+          var departureTime: Date = StartUtils.parserStringToTime(list.get(a).departureTimeToMetroCar)
           var flag: Boolean = false
           for(i <- 0 until rs.size() if !flag) {
             if( departureTime.compareTo(rs.get(i).initial_time) >= 0 && departureTime.compareTo(rs.get(i).final_time) < 0 ) {
